@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🐳 GitLab Docker Compose セットアップ
+![](assets/header.svg)
 
 [![Docker](https://img.shields.io/badge/Docker-20.10%2B-blue?logo=docker)](https://www.docker.com/)
 [![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v2.0%2B-blue?logo=docker)](https://docs.docker.com/compose/)
@@ -8,11 +8,13 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Maintained](https://img.shields.io/badge/メンテナンス-実施中-green.svg)](https://github.com/username/repo/graphs/commit-activity)
 
-</div>
-
-## 📋 概要
+### 📋 概要
 
 GitLab CEをDocker Composeで自己ホスティングするための設定リポジトリです。
+
+</div>
+
+
 
 ## 🚀 クイックスタート
 
