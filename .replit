@@ -1,0 +1,50 @@
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "GitLab Docker Compose"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Configuration Review"
+
+[[workflows.workflow]]
+name = "GitLab Docker Compose"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "docker compose up"
+waitForPort = 80
+
+[[workflows.workflow]]
+name = "Configuration Review"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cat docker-compose.yml .env.example"
+
+[deployment]
+run = ["sh", "-c", "docker compose up"]
+
+[nix]
+channel = "stable-24_05"

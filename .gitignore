@@ -1,0 +1,31 @@
+# GitLab データディレクトリ
+/data/*
+!/data/.gitkeep
+
+# ログファイル
+/logs/*
+!/logs/.gitkeep
+
+# 設定ファイル
+/config/*
+!/config/.gitkeep
+
+# バックアップファイル
+/backups/*
+!/backups/.gitkeep
+
+# Runner設定
+/runner/*
+!/runner/.gitkeep
+
+# 環境変数ファイル
+.env
+
+# OS固有のファイル
+.DS_Store
+Thumbs.db
+
+# エディタの一時ファイル
+*.swp
+*.swo
+*~
