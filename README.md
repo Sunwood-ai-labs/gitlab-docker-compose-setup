@@ -47,17 +47,59 @@ docker compose up -d
 docker compose restart gitlab-runner
 ```
 
-## バックアップとメンテナンス
+## バックアップとリストア
 
-### バックアップの実行
+### 自動バックアップの設定（cron使用）
+1. cronのインストール:
 ```bash
-docker compose exec gitlab gitlab-backup create
+sudo apt-get update && sudo apt-get install -y cron
+```
+
+2. バックアップ用のcronジョブを設定:
+```bash
+echo "0 6 * * * root docker-compose exec -T gitlab gitlab-backup create >> /var/log/gitlab/backup.log 2>&1" | sudo tee /etc/cron.d/gitlab-backup
+sudo chmod 0644 /etc/cron.d/gitlab-backup
+```
+※ 上記の設定では毎朝6時にバックアップを実行します。
+
+### 手動バックアップの実行
+```bash
+# バックアップの作成
+docker-compose exec gitlab gitlab-backup create
+
+# バックアップファイルの確認（ホスト側）
+ls -la ./backups/
+
+# バックアップファイルの確認（コンテナ内）
+docker-compose exec gitlab ls -la /var/opt/gitlab/backups/
 ```
 
 ### バックアップの復元
+1. GitLabサービスを停止:
 ```bash
-docker compose exec gitlab gitlab-backup restore
+docker-compose down
 ```
+
+2. バックアップファイルの権限を設定:
+```bash
+sudo chmod 777 -R ./backups/
+```
+
+3. GitLabサービスを起動:
+```bash
+docker-compose up -d
+```
+
+4. バックアップを復元:
+```bash
+# BACKUP=のあとにはバックアップファイル名から拡張子を除いた部分を指定
+docker-compose exec gitlab gitlab-backup restore BACKUP=1732528314_2024_11_25_17.4.2
+```
+
+### 注意事項
+- バックアップファイルは `./backups/` ディレクトリに保存されます
+- バックアップには設定ファイルは含まれません。必要に応じて `/etc/gitlab` もバックアップしてください
+- リストア時は、バックアップ時と同じバージョンのGitLabを使用することを推奨します
 
 ## トラブルシューティング
 

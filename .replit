@@ -14,6 +14,10 @@ args = "GitLab Docker Compose"
 task = "workflow.run"
 args = "Configuration Review"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "README Review"
+
 [[workflows.workflow]]
 name = "GitLab Docker Compose"
 author = "agent"
@@ -42,6 +46,20 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cat docker-compose.yml .env.example"
+
+[[workflows.workflow]]
+name = "README Review"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cat README.md"
 
 [deployment]
 run = ["sh", "-c", "docker compose up"]
