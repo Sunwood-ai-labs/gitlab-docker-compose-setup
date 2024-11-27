@@ -1,7 +1,13 @@
+<div align="center">
+
 # GitLab Docker Compose Setup
+
+![Header](header.svg)
 
 ## Overview
 A Docker Compose configuration for self-hosting GitLab CE with GitLab Runner.
+
+</div>
 
 ## 必要条件
 - Docker Engine 20.10以上
