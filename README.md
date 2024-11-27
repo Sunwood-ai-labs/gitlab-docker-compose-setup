@@ -1,80 +1,56 @@
 <div align="center">
 
-![Header](assets/header.svg)
+# 🐳 GitLab Docker Compose セットアップ
 
-## 🚀 GitLab Docker Compose Setup
-
-### Overview
-
-A Docker Compose configuration for self-hosting GitLab CE with GitLab Runner.
+[![Docker](https://img.shields.io/badge/Docker-20.10%2B-blue?logo=docker)](https://www.docker.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v2.0%2B-blue?logo=docker)](https://docs.docker.com/compose/)
+[![GitLab CE](https://img.shields.io/badge/GitLab%20CE-最新版-orange?logo=gitlab)](https://about.gitlab.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Maintained](https://img.shields.io/badge/メンテナンス-実施中-green.svg)](https://github.com/username/repo/graphs/commit-activity)
 
 </div>
 
-## 📋 必要条件
-- Docker Engine 20.10以上
+## 📋 概要
+
+GitLab CEをDocker Composeで自己ホスティングするための設定リポジトリです。
+
+## 🚀 クイックスタート
+
+### 前提条件
+- Docker 20.10以上
 - Docker Compose v2.0以上
-- 最小システム要件:
+- 最小システム要件：
   - CPU: 4コア
   - メモリ: 8GB以上
-  - ストレージ: 50GB以上（推奨）
+  - ストレージ: 50GB以上
 
-## 🛠️ セットアップ手順
+### セットアップ手順
 
-### リポジトリのクローン
+1. リポジトリのクローン:
 ```bash
 git clone <repository-url>
 cd <repository-name>
 ```
 
-### 環境変数の設定
-1. `.env.example` ファイルを `.env` にコピーします：
+2. 環境設定:
 ```bash
 cp .env.example .env
+# .envファイルを編集して必要な設定を行う
 ```
-2. `.env` ファイルを編集し、必要な設定を行います：
-- `GITLAB_ROOT_PASSWORD`: GitLab管理者のパスワードを設定
-- `RUNNER_REGISTRATION_TOKEN`: GitLab Runnerの登録トークンを設定
 
-### Docker Composeの起動
+3. GitLabの起動:
 ```bash
 docker compose up -d
 ```
 
-### 初期アクセス
-1. ブラウザで `http://your-server-ip` にアクセス
-2. 以下の認証情報でログイン：
-   - ユーザー名: root
-   - パスワード: `.env`で設定したGITLAB_ROOT_PASSWORD
+## 💾 バックアップと復元
 
-### GitLab Runnerの登録
-1. GitLabの管理者画面からRunner登録トークンを取得
-2. `.env`ファイルの`RUNNER_REGISTRATION_TOKEN`を更新
-3. Runnerを再起動：
+### バックアップの作成
 ```bash
-docker compose restart gitlab-runner
-```
-
-## 💾 バックアップとリストア
-
-### 自動バックアップの設定（cron使用）
-1. cronのインストール:
-```bash
-sudo apt-get update && sudo apt-get install -y cron
-```
-
-2. バックアップ用のcronジョブを設定:
-```bash
-echo "0 6 * * * root docker-compose exec -T gitlab gitlab-backup create >> /var/log/gitlab/backup.log 2>&1" | sudo tee /etc/cron.d/gitlab-backup
-sudo chmod 0644 /etc/cron.d/gitlab-backup
-```
-※ 上記の設定では毎朝6時にバックアップを実行します。
-
-### 手動バックアップの実行
-```bash
-# バックアップの作成
+# バックアップの実行
 docker-compose exec gitlab gitlab-backup create
 
-# バックアップファイルの確認（ホスト側）
+# バックアップファイルの確認
 ls -la ./backups/
 
 # バックアップファイルの確認（コンテナ内）
@@ -99,14 +75,8 @@ docker-compose up -d
 
 4. バックアップを復元:
 ```bash
-# BACKUP=のあとにはバックアップファイル名から拡張子を除いた部分を指定
-docker-compose exec gitlab gitlab-backup restore BACKUP=1732528314_2024_11_25_17.4.2
+docker-compose exec gitlab gitlab-backup restore BACKUP=<バックアップ名>
 ```
-
-### 注意事項
-- バックアップファイルは `./backups/` ディレクトリに保存されます
-- バックアップには設定ファイルは含まれません。必要に応じて `/etc/gitlab` もバックアップしてください
-- リストア時は、バックアップ時と同じバージョンのGitLabを使用することを推奨します
 
 ## 🔧 トラブルシューティング
 
