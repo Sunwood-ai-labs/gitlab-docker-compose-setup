@@ -1,10 +1,11 @@
 <div align="center">
 
-# GitLab Docker Compose Setup
+![Header](assets/header.svg)
 
-![Header](header.svg)
+## GitLab Docker Compose Setup
 
-## Overview
+### Overview
+
 A Docker Compose configuration for self-hosting GitLab CE with GitLab Runner.
 
 </div>
