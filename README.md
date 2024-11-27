@@ -1,7 +1,7 @@
-# Docker Compose による GitLab 自己ホスティング
+# GitLab Docker Compose Setup
 
-## 概要
-このリポジトリは、Docker Composeを使用してGitLab CEとGitLab Runnerを簡単にセットアップするための設定を提供します。
+## Overview
+A Docker Compose configuration for self-hosting GitLab CE with GitLab Runner.
 
 ## 必要条件
 - Docker Engine 20.10以上
